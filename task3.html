@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Data Migration and Reporting Dashboard with CRUD Operations</title>
+</head>
+<body>
+    <h1>Data Migration and Reporting Dashboard</h1>
+    <h2>Migrated Data</h2>
+    <div id="data-container"></div>
+    <h2>Add New Data</h2>
+    <form id="data-form">
+        <input type="text" id="data-input" placeholder="Enter data">
+        <button type="button" onclick="addData()">Add Data</button>
+    </form>
+    <h2>Update Data</h2>
+    <form id="update-form">
+        <input type="number" id="update-id" placeholder="Enter ID">
+        <input type="text" id="update-input" placeholder="Enter updated data">
+        <button type="button" onclick="updateData()">Update Data</button>
+    </form>
+    <h2>Delete Data</h2>
+    <form id="delete-form">
+        <input type="number" id="delete-id" placeholder="Enter ID">
+        <button type="button" onclick="deleteData()">Delete Data</button>
+    </form>
+    <script>
+        let migratedData = [
+            { id: 1, name: 'Abdul Kalam' },
+            { id: 2, name: 'Jawaharlal Nehru' },
+            { id: 3, name: 'Mahatma Gandhi' }
+        ];
+        let counter = 4; 
+        function displayData() {
+            const dataContainer = document.getElementById('data-container');
+            dataContainer.innerHTML = '';
+            migratedData.forEach(item => {
+                const dataElement = document.createElement('div');
+                dataElement.textContent = `ID: ${item.id}, Name: ${item.name}`;
+                dataContainer.appendChild(dataElement);
+            });
+        }
+        function addData() {
+            const newName = document.getElementById('data-input').value;
+            if (newName) {
+                migratedData.push({ id: counter, name: newName });
+                counter++; // increment the counter for the next ID
+                displayData();
+                alert(`Welcome, ${newName}!`);
+            } else {
+                alert("Please provide a valid name.");
+            }
+        }
+        function updateData() {
+            const updateId = parseInt(document.getElementById('update-id').value);
+            const updateData = document.getElementById('update-input').value;
+            migratedData.forEach(item => {
+                if (item.id === updateId) {
+                    item.name = updateData;
+                }
+            });
+            displayData();
+        }
+        function deleteData() {
+            const deleteId = parseInt(document.getElementById('delete-id').value);
+            migratedData = migratedData.filter(item => item.id !== deleteId);
+            displayData();
+        }
+        displayData();
+    </script>
+</body>
+</html>
